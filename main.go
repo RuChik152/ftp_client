@@ -54,11 +54,13 @@ func main() {
 
 	if err != nil {
 		log.Fatal("Dial: ", err)
+		os.Exit(1)
 	}
 
 	err = c.Login("ftp_karga", "413321337")
 	if err != nil {
 		log.Fatal("Login: ", err)
+		os.Exit(1)
 	}
 
 	data := bytes.NewReader(reader(*path_file))
@@ -66,11 +68,14 @@ func main() {
 	err = c.Stor(fmt.Sprintf("./upload/%s", *name_file), data)
 	if err != nil {
 		log.Fatal("Stor: ", err)
+		os.Exit(1)
 	}
 
 	if err := c.Quit(); err != nil {
 		log.Fatal("Quit: ", err)
+		os.Exit(1)
 	}
 
+	log.Printf("File %s successfully uploaded as %s.", *path_file, *name_file)
 	os.Exit(0)
 }
